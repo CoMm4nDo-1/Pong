@@ -1,36 +1,40 @@
 import pygame
+import sys
+
 
 # Initialise pygame
 pygame.init()
+SW, SH = 800, 800
 
 # Set up the screen
-screen = pygame.display.set_mode((640,640))
-pygame.display.set_caption("My First Game")
-random_pic = pygame.image.load(r"C:\Users\cjand\OneDrive\Desktop\Python ML Work\Learning Material\PIC.png").convert()
+screen = pygame.display.set_mode((SW,SH))
+pygame.display.set_caption("Pong!")
 
-random_pic = pygame.transform.scale(random_pic, (400, 522)) 
-# Game Loop
-running = True
 
-x = 0
 clock = pygame.time.Clock()
 
-while running:
-    # creates a white background for screen
-    screen.fill((255, 255, 255)) # RGB for white
-    # blit draws an image on screen aka pictures
-    screen.blit(random_pic, (x, 30))
-    
-    x += 1
-    #determines how many fps game will run at
-    clock.tick(60) # 60 fps 
+# Defines class of paddle
+class Paddle:
+    def __init__(self):
+        self.x = 200
+        self.y = 200
+        self.width = 20
+        self.height = 100
+        self.color = ("#FFFFFF")
+        rect = pygame.Rect(self.x, self.y, self.width, self.height)
+        pygame.draw.rect(screen, self.color, rect)
 
+paddle = Paddle()
 
+while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
-    pygame.display.flip()
+            pygame.quit()
+            sys.exit()
+            
+    #determines how many fps game will run at
+    clock.tick(10) # 60 fps     
 
-# Quit pygame
-pygame.quit()
+
+
 
