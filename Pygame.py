@@ -20,7 +20,7 @@ class Paddle:
     def __init__(self):
         # Starting position x and y
         self.x = 0
-        self.y = 350
+        self.y = 0
         # Direction of movement in y direction (up and down)
         self.ydir = 0
         # Size of the paddle
@@ -28,10 +28,12 @@ class Paddle:
         self.height = 85
         # Color of the paddle
         self.color = ("#FFFFFF")
-        # draws the paddle on the screen
+        
+    def draw(self):
+        # draws the paddle on the screen    
         rect = pygame.Rect(self.x, self.y, self.width, self.height)
         pygame.draw.rect(screen, self.color, rect)
-        
+
 
 paddle = Paddle()
 
@@ -39,12 +41,24 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
-            sys.exit()        
+            sys.exit()
+        # Key inputs for movement up and down (either arrow keys or w and s)
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP or event.key == pygame.K_w:
+                paddle.y = -10
+            elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                paddle.y = 10
+
+    # Fills screen with black to erase previous frames
+    screen.fill("black")
+    paddle.draw()
+
+
+
     #determines how many fps game will run at
-    clock.tick(10) # 60 fps
+    clock.tick(60) # 60 fps
     #updates the screen
     pygame.display.update()
-    
 
 
 
