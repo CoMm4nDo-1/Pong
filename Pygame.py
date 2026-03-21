@@ -53,12 +53,40 @@ class Ball:
         # Ball starting position
         self.x = 400
         self.y = 400
+        # Detects if hits the wall
+        self.hit = False
+        # Ball movement direction
+        self.xdir = 5
+        self.ydir = 7
+
     def draw(self):
         pygame.draw.circle(screen, ("#FFFFFF"), (self.x, self.y), 10)
     # Ball movement    
     def update(self):
-        self.x += 5
-        self.y += 5
+        self.x += self.xdir
+        self.y += self.ydir
+        # Reset ball position to stay on screen for x position
+        if self.x < 0:
+            self.x = 0
+            self.hit = True
+        if self.x > SW:
+            self.x = SW
+            self.hit = True
+        # Reset ball position to stay on screen for y position
+        if self.y < 0:
+            self.y = 0
+            self.hit = True
+        if self.y > SH:
+            self.y = SH
+            self.hit = True
+        
+        # If the ball hits the wall it changes direction
+        if self.hit == True:
+            if (self.x == 0 or self.x == SW):
+                self.xdir *= -1
+            if (self.y == 0 or self.y == SH):
+                self.ydir *= -1
+            self.hit = False
 
  
 paddle = Paddle()
