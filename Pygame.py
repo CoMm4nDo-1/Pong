@@ -50,7 +50,12 @@ class Ball:
         self.x = 400
         self.y = 400
     def draw(self):
-        circle = pygame.draw.circle(screen, ("#FFFFFF"), (self.x, self.y), 10)
+        pygame.draw.circle(screen, ("#FFFFFF"), (self.x, self.y), 10)
+    # Ball movement    
+    def update(self):
+        self.x += 5
+        self.y += 5
+
  
 paddle = Paddle()
 ball = Ball()
@@ -67,11 +72,15 @@ while True:
     paddle.draw()
     paddle.move()
     ball.draw()
+    ball.update()
 
     #determines how many fps game will run at
     clock.tick(60) # 60 fps
     #updates the screen
     pygame.display.update()
+
+
+
 
 
 
