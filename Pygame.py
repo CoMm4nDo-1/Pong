@@ -30,8 +30,8 @@ class Paddle:
         self.color = ("#FFFFFF")
     def draw(self):
         # draws the paddle on the screen    
-        rect = pygame.Rect(self.x, self.y, self.width, self.height)
-        pygame.draw.rect(screen, self.color, rect)
+        rectangle = pygame.Rect(self.x, self.y, self.width, self.height)
+        pygame.draw.rect(screen, self.color, rectangle)
     def move(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_w]:
@@ -43,8 +43,18 @@ class Paddle:
         elif keys[pygame.K_UP]:
             self.y -= 15
 
-
+# Defines ball class
+class Ball:
+    def __init__(self):
+        # Ball starting position
+        self.x = 400
+        self.y = 400
+    def draw(self):
+        circle = pygame.draw.circle(screen, ("#FFFFFF"), (self.x, self.y), 10)
+ 
 paddle = Paddle()
+ball = Ball()
+
 
 while True:
     for event in pygame.event.get():
@@ -56,7 +66,7 @@ while True:
     screen.fill("black")
     paddle.draw()
     paddle.move()
-
+    ball.draw()
 
     #determines how many fps game will run at
     clock.tick(60) # 60 fps
