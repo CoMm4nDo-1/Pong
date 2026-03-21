@@ -58,7 +58,7 @@ class Ball:
         # Ball movement direction
         self.xdir = 5
         self.ydir = 7
-
+    # Resets the ball position to middle
     def reset(self):    
         self.x = 400
         self.y = 400
