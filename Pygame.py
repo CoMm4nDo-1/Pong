@@ -35,13 +35,13 @@ class Paddle:
     def move(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_w]:
-            self.y = -10
+            self.y -= 15
         elif keys[pygame.K_s]:
-            self.y = 10
+            self.y += 15
         elif keys[pygame.K_DOWN]:
-            self.y = 10
+            self.y += 15
         elif keys[pygame.K_UP]:
-            self.y = 10
+            self.y -= 15
 
 
 paddle = Paddle()
