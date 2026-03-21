@@ -22,7 +22,7 @@ class Paddle:
         self.x = 0
         self.y = 0
         # Size of the paddle
-        self.width = 20
+        self.width = 15
         self.height = 85
         # Color of the paddle
         self.color = ("#FFFFFF")
@@ -59,6 +59,13 @@ class Ball:
         self.xdir = 5
         self.ydir = 7
 
+    def reset(self):    
+        self.x = 400
+        self.y = 400
+        self.xdir = 5
+        self.ydir = 7
+        self.hit = False
+
     def draw(self):
         pygame.draw.circle(screen, ("#FFFFFF"), (self.x, self.y), 10)
     # Ball movement    
@@ -82,16 +89,31 @@ class Ball:
         
         # If the ball hits the wall it changes direction
         if self.hit == True:
-            if (self.x == 0 or self.x == SW):
+            if (self.x == SW):
                 self.xdir *= -1
-            if (self.y == 0 or self.y == SH):
+            if (self.y <= 0 or self.y >= SH):
                 self.ydir *= -1
             self.hit = False
+            
+            # IMPLETEMENT SCORE SYSTEM IF X == 0 or X == SW MUST COME BACK
+            if self.x <= 0:
+                score.score1 += 1
+                self.reset()
+            if self.x >= SW:
+                score.score2 += 1
+                # TEMPORARILY LEAVE COMMENTED UNTIL CPU IS COMPLETE
+                # self.reset()
 
- 
+# Sets up score class
+class Score:
+    def __init__(self):
+        self.score1 = 0
+        self.score2 = 0
+
+
 paddle = Paddle()
 ball = Ball()
-
+score = Score()
 
 while True:
     for event in pygame.event.get():
