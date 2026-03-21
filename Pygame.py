@@ -21,28 +21,32 @@ class Paddle:
         # Starting position x and y
         self.x = 0
         self.y = 0
-        # Direction of movement in y direction (up and down)
-        self.ydir = 0
         # Size of the paddle
         self.width = 20
         self.height = 85
         # Color of the paddle
         self.color = ("#FFFFFF")
+
     def draw(self):
         # draws the paddle on the screen    
         rectangle = pygame.Rect(self.x, self.y, self.width, self.height)
-        pygame.draw.rect(screen, self.color, rectangle)
+        # Sets boundaries for paddle 
+        boundaries = rectangle.clamp(screen.get_rect(size=(SW, SH)))
+        pygame.draw.rect(screen, self.color, boundaries)
+
     def move(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_w]:
+        # Moves the paddle up and down with W and S or UP and DOWN keys
+        if keys[pygame.K_w] or keys[pygame.K_UP]:
             self.y -= 15
-        elif keys[pygame.K_s]:
+        if keys[pygame.K_s] or keys[pygame.K_DOWN]:
             self.y += 15
-        elif keys[pygame.K_DOWN]:
-            self.y += 15
-        elif keys[pygame.K_UP]:
-            self.y -= 15
-
+        # Reset y position to stay on screen
+        if self.y < 0:
+            self.y = 0
+        if self.y > SH - self.height:
+            self.y = SH - self.height
+        
 # Defines ball class
 class Ball:
     def __init__(self):
@@ -69,13 +73,13 @@ while True:
 
     # Fills screen with black to erase previous frames
     screen.fill("black")
-    paddle.draw()
     paddle.move()
-    ball.draw()
+    paddle.draw()
     ball.update()
+    ball.draw()
 
     #determines how many fps game will run at
-    clock.tick(60) # 60 fps
+    clock.tick(45) # 45 fps
     #updates the screen
     pygame.display.update()
 
