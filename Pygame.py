@@ -47,6 +47,33 @@ class Paddle:
         if self.y > SH - self.height:
             self.y = SH - self.height
         
+# Defines class of paddle
+class CPUPaddle:
+    def __init__(self):
+        # Starting position x and y
+        self.x = SW - 15
+        self.y = 0
+        self.ydir = 15
+        # Size of the paddle
+        self.width = 15
+        self.height = 85
+        # Color of the paddle
+        self.color = ("#FFFFFF")
+
+    def draw(self):
+        # draws the paddle on the screen    
+        rectangle = pygame.Rect(self.x, self.y, self.width, self.height)
+        # Sets boundaries for paddle 
+        boundaries = rectangle.clamp(screen.get_rect(size=(SW, SH)))
+        pygame.draw.rect(screen, self.color, boundaries)
+
+    def move(self):
+        self.y += self.ydir
+        if self.y < 0:
+            self.ydir *= -1
+        if self.y > SH - self.height:
+            self.ydir *= -1
+        
 # Defines ball class
 class Ball:
     def __init__(self):
@@ -112,6 +139,7 @@ class Score:
 
 
 paddle = Paddle()
+cpupaddle = CPUPaddle()
 ball = Ball()
 score = Score()
 
@@ -125,6 +153,8 @@ while True:
     screen.fill("black")
     paddle.move()
     paddle.draw()
+    cpupaddle.move()
+    cpupaddle.draw()
     ball.update()
     ball.draw()
 
