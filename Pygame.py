@@ -162,12 +162,3 @@ while True:
     clock.tick(45) # 45 fps
     #updates the screen
     pygame.display.update()
-
-
-
-
-
-
-
-
-
