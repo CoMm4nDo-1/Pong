@@ -52,7 +52,7 @@ class CPUPaddle:
     def __init__(self):
         # Starting position x and y
         self.x = SW - 15
-        self.y = 0
+        self.y = 400
         self.ydir = 15
         # Size of the paddle
         self.width = 15
@@ -68,11 +68,13 @@ class CPUPaddle:
         pygame.draw.rect(screen, self.color, boundaries)
 
     def move(self):
-        self.y += self.ydir
-        if self.y < 0:
-            self.ydir *= -1
-        if self.y > SH - self.height:
-            self.ydir *= -1
+        # Finds center and moves the paddle based on the ball position
+        paddle_center = self.y + self.height / 2
+        if ball.y < paddle_center:
+            self.y -= self.ydir
+        elif ball.y > paddle_center:
+            self.y += self.ydir
+        
         
 # Defines ball class
 class Ball:
@@ -100,9 +102,16 @@ class Ball:
         self.x += self.xdir
         self.y += self.ydir
         # Checks if ball hits the paddle and changes direction
+        # 10 is radius of the ball
+        # Paddle collision
         if (self.x - 10 <= paddle.x + paddle.width and self.x + 10 >= paddle.x and self.y >= paddle.y and self.y <= paddle.y + paddle.height):
                 self.xdir *= -1
                 self.x = paddle.x + paddle.width + 10
+        # CPU paddle collision
+        if (self.x + 10 >= cpupaddle.x and self.x - 10 <= cpupaddle.x + cpupaddle.width and self.y >= cpupaddle.y and self.y <= cpupaddle.y + cpupaddle.height):
+                self.xdir *= -1
+                self.x = cpupaddle.x - cpupaddle.width - 10
+
         # Reset ball position to stay on screen for x position
         if self.x < 0:
             self.x = 0
