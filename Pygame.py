@@ -99,6 +99,10 @@ class Ball:
     def update(self):
         self.x += self.xdir
         self.y += self.ydir
+        # Checks if ball hits the paddle and changes direction
+        if (self.x - 10 <= paddle.x + paddle.width and self.x + 10 >= paddle.x and self.y >= paddle.y and self.y <= paddle.y + paddle.height):
+                self.xdir *= -1
+                self.x = paddle.x + paddle.width + 10
         # Reset ball position to stay on screen for x position
         if self.x < 0:
             self.x = 0
@@ -162,3 +166,4 @@ while True:
     clock.tick(45) # 45 fps
     #updates the screen
     pygame.display.update()
+    
